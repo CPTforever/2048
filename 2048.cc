@@ -52,21 +52,18 @@ void clear_board(size_t board[4][4]) {
 enum DIRECTION {LEFT, RIGHT, UP, DOWN, dir_count};
 
 
-bool move(size_t board[4][4], std::pair<int, int> xy, DIRECTION dir) {
+void move(size_t board[4][4], std::pair<int, int> xy, DIRECTION dir) {
     int y = xy.first, x = xy.second;
-    bool made = false;     
+    
     if (dir == RIGHT) {
         for (int i = x + 1; i < 4; i++) {
             if (board[y][i] == 0) {
-                if (board[y][i]
-
                 std::swap(board[y][i], board[y][i - 1]);
-                
             }
             else if (board[y][i] == board[y][i - 1]) {
                 board[y][i] *= 2;
                 board[y][i - 1] = 0;
-                made = true;
+                break;
             }
             else {
                 break;
@@ -118,11 +115,11 @@ bool move(size_t board[4][4], std::pair<int, int> xy, DIRECTION dir) {
             }
         }
     }
-    
-    return false;
+
+
 }
 
-bool shake(size_t board[4][4], DIRECTION dir) {
+void shake(size_t board[4][4], DIRECTION dir) {
     for (int i = 0; i < 4; i++) {
         for (int j = 3; j > -1; j--) {
             if (dir == RIGHT) {
@@ -139,9 +136,6 @@ bool shake(size_t board[4][4], DIRECTION dir) {
             }
         }
     }
-
-
-    return true;
 }
 
 bool check_loss(size_t board[4][4]) {
@@ -174,16 +168,20 @@ int main(void) {
         print_board(board);
         char c = EOF;
         while ((c = getchar())) {
+            
             if (c == 'a') {
                 shake(board, LEFT);
             }
             else if (c == 'd') { 
+                
                 shake(board, RIGHT);
             }
             else if (c == 'w') {
+
                 shake(board, UP);
             }
             else if (c == 's') {
+
                 shake(board, DOWN);
             }
             else {
