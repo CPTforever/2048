@@ -1,6 +1,6 @@
-CC      = clang++
+CC      = clang
 CFLAGS  = -Wall -Wextra -Wpedantic -Wextra
-LFLAGS  =
+LFLAGS  = -lncurses
 TARGETS = 2048  
 MODULES = 
 OBJECTS = $(patsubst %,%.o,$(MODULES))
@@ -16,10 +16,10 @@ debug: $(TARGETS)
 $(TARGETS): %: %.o $(OBJECTS)
 	$(CC) -o $@ $^ $(LFLAGS) $(CFLAGS)
 
-%.o: %.cc %.h
+%.o: %.c %.h
 	$(CC) -c $< $(CFLAGS)
 
-$(TOBJECTS): %.o: %.cc
+$(TOBJECTS): %.o: %.c
 	$(CC) -c $< $(CFLAGS)
 
 clean: tidy
